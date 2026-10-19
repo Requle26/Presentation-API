@@ -12,7 +12,7 @@ api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
     raise RuntimeError("프로젝트 루트 .env에 GEMINI_API_KEY를 설정해 주세요.")
 
-class PresentationAnalysis(BaseModel):
+class presentation_analysis(BaseModel):
     score: int = Field(ge=0, le=100)
     feedback: str
     strengths: list[str]
@@ -48,14 +48,14 @@ JSON 이외의 설명이나 마크다운 코드 블록은 출력하지 마.
 발표 대본:
 """
 
-def generate_at_response(prompt: str):
+def generate_script_feedback(prompt: str):
     response = client.models.generate_content(
-        model="gemini-3.6-flash",
+        model=os.getenv("GEMINI_MODEL"),
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,
             response_mime_type="application/json",
-            response_schema=PresentationAnalysis,
+            response_schema=presentation_analysis,
         ),
     )
 

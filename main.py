@@ -15,9 +15,8 @@ app.add_middleware(
 
 from routers import (
     auth,
-    input,
+    upload,
     overall_result,
-    slide_detail_feedback,
 )
 
 
@@ -26,6 +25,5 @@ def get_root():
     return {"message" : "API is running!"}
 
 app.include_router(auth.router, prefix="/auth",)
-app.include_router(input.router, prefix="/file_input",)
+app.include_router(upload.router, prefix="/upload",)
 app.include_router(overall_result.router, prefix="/result",)
-app.include_router(slide_detail_feedback.router, prefix="/slide",)
