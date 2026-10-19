@@ -28,3 +28,16 @@ bin/
 *.log
 *.tmp
 *.temp
+
+recordings/
+__pycache__/
+*.wav
+*.exe
+_*.py
+*.pyc
+
+.claude/
+.pytest_cache/
+profiles/*.json
+*.pptx
+*.xlsx
