@@ -1,7 +1,5 @@
 from fastapi import APIRouter, File, Form, UploadFile
-from services.script_analysis_service import generate_script_feedback
-from services.material_analysis_service import generate_material_feedback
-from services.Overall_result import overall_result
+from services.ai_feedback_method import overall_result, generate_script_feedback, generate_material_feedback
 
 
 router = APIRouter()
