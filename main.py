@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+
 app = FastAPI()
 
 origins = ["http://localhost:5173"]
@@ -16,9 +17,12 @@ app.add_middleware(
 from routers import (
     auth,
     upload,
-    overall_result,
+    overall_result
 )
 
+from routers.mock_API import (
+    mock_upload,
+)
 
 @app.get("/")
 def get_root():
@@ -27,3 +31,4 @@ def get_root():
 app.include_router(auth.router, prefix="/auth",)
 app.include_router(upload.router, prefix="/upload",)
 app.include_router(overall_result.router, prefix="/result",)
+app.include_router(mock_upload.router, prefix="/mock/upload")
