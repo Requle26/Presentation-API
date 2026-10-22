@@ -19,8 +19,9 @@ class feedback(BaseModel):
     feedback: str
     strengths: list[str]
     improvements: list[str]
-
-def generate_material_feedback(input_file, mime_type: str):
+    
+# 자료 피드백 함수
+def generate_material_feedback(input_file, mime_type: str, title: str, perpose: str, detail: str | None = None):
     SYSTEM_PROMPT = """너는 발표 자료 평가 전문 AI인 PresentAI야.
     사용자가 제공한 발표 자료(문서/이미지)를 분석하여 평가 결과를 반환해.
 
@@ -34,10 +35,14 @@ def generate_material_feedback(input_file, mime_type: str):
     """
 
     uploaded_file = client.files.upload(file=input_file, config=types.UploadFileConfig(mime_type=mime_type))
+    if detail is None:
+        prompt = f"발표 제목과 목적, 추가 설명등을 참고해서 피드백에 반영해, 발표 제목: {title}, 발표 목적: {perpose}"
+    elif detail is not None:
+        prompt = f"발표 제목과 목적, 추가 설명등을 참고해서 피드백에 반영해, 발표 제목: {title}, 발표 목적: {perpose}, 추가 설명: {detail}"
 
     response = client.models.generate_content(
         model=os.getenv("GEMINI_MODEL"),
-        contents=[uploaded_file, "이 문서의 핵심 내용을 요약해줘"],
+        contents=[prompt, uploaded_file],
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,
             response_mime_type="application/json",
@@ -48,8 +53,8 @@ def generate_material_feedback(input_file, mime_type: str):
     return response.parsed
 
 
-
-def generate_script_feedback(prompt: str):
+# 대본 피드백 함수
+def generate_script_feedback(prompt: str, title: str, perpose: str, detail: str | None = None):
     SYSTEM_PROMPT = """너는 발표 평가 AI인 PresentAI야.
     사용자가 제공한 발표 대본을 분석하고, 발표 평가 결과를 JSON 형식으로 반환해.
     반드시 다음 규칙을 지켜.
@@ -74,12 +79,15 @@ def generate_script_feedback(prompt: str):
     "개선점 2"
     ]
     }
-    다음 발표 대본을 평가해.
-    발표 대본:
     """
+    if detail is None:
+            TPD = f"발표 제목과 목적, 추가 설명등을 참고해서 피드백에 반영해, 발표 제목: {title}, 발표 목적: {perpose}, 발표 대본: "
+    elif detail is not None:
+            TPD = f"발표 제목과 목적, 추가 설명등을 참고해서 피드백에 반영해, 발표 제목: {title}, 발표 목적: {perpose}, 추가 설명: {detail}, 발표 대본: "
+    
     response = client.models.generate_content(
         model=os.getenv("GEMINI_MODEL"),
-        contents=prompt,
+        contents=[TPD, prompt],
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,
             response_mime_type="application/json",
@@ -87,14 +95,10 @@ def generate_script_feedback(prompt: str):
         ),
     )
 
-    result = response.parsed
-
-    if result is None:
-        raise ValueError("구조화된 분석결과 반환 실패")
-
-    return result
+    return response.parsed
 
 
+# 대본 / 자료 종합 피드백 함수
 def overall_result(prompt: str, input_file, mime_type: str):
     SYSTEM_PROMPT = """너는 발표 평가 AI인 PresentAI야.
     사용자가 제공한 '발표 대본'과 '발표 자료(문서/이미지)'를 함께 분석하고, 발표 평가 결과를 JSON 형식으로 반환해.
