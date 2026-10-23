@@ -16,6 +16,8 @@ def create_feedback(title: str, perpose: str, detail: str | None = Form(None), p
             perpose = perpose,
             detail = detail
             )
+        if result is None:
+            raise HTTPException(status_code=502, detail="피드백 결과 반환 실패")
 
     elif prompt is not None and file is None:
         print("대본을 처리합니다")
@@ -25,6 +27,8 @@ def create_feedback(title: str, perpose: str, detail: str | None = Form(None), p
             perpose,
             detail
             )
+        if result is None:
+            raise HTTPException(status_code=502, detail="피드백 결과 반환 실패")
 
     elif file is not None and prompt is None:
         print("파일을 처리합니다")
@@ -35,6 +39,8 @@ def create_feedback(title: str, perpose: str, detail: str | None = Form(None), p
             perpose = perpose,
             detail = detail
             )
+        if result is None:
+            raise HTTPException(status_code=502, detail="피드백 결과 반환 실패")
 
     else:
         raise HTTPException (status_code=400, detail="대본이나 파일 중 하나 이상을 입력해야 합니다.")

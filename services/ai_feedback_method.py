@@ -127,9 +127,5 @@ def overall_result(prompt: str, input_file, mime_type: str, title: str, perpose:
             response_schema=feedback,
         ),
     )
-    result = response.parsed
 
-    if result is None:
-        raise ValueError("구조화된 분석결과 반환 실패")
-
-    return result
+    return response.parsed
