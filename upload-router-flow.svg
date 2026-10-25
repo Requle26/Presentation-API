@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1120" viewBox="0 0 1500 1120" role="img" aria-labelledby="title description">
+  <title id="title">POST /upload/ 라우터 처리 흐름</title>
+  <desc id="description">발표 제목, 목적, 대본, 파일 입력에 따라 세 가지 피드백 서비스 중 하나를 호출하고 결과를 반환하는 FastAPI 라우터 흐름도</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fbff"/>
+      <stop offset="1" stop-color="#eef2ff"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#1e3558" flood-opacity=".10"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M1 1 11 6 1 11z" fill="#8290a7"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M1 1 11 6 1 11z" fill="#4263eb"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M1 1 11 6 1 11z" fill="#dc6470"/>
+    </marker>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; fill: #17243b; }
+      .eyebrow { font-size: 14px; font-weight: 750; letter-spacing: 2px; fill: #667895; }
+      .title { font-size: 38px; font-weight: 800; letter-spacing: -1px; }
+      .subtitle { font-size: 17px; fill: #65748b; }
+      .section { font-size: 14px; font-weight: 800; letter-spacing: 1px; fill: #71809a; }
+      .heading { font-size: 19px; font-weight: 750; }
+      .body { font-size: 15px; fill: #43536b; }
+      .small { font-size: 13px; fill: #687991; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; font-weight: 700; }
+      .white { fill: #fff; }
+      .line { fill: none; stroke: #8290a7; stroke-width: 2.5; marker-end: url(#arrow); }
+      .line-blue { fill: none; stroke: #4263eb; stroke-width: 2.5; marker-end: url(#arrow-blue); }
+      .line-red { fill: none; stroke: #dc6470; stroke-width: 2.5; marker-end: url(#arrow-red); }
+    </style>
+  </defs>
+
+  <rect width="1500" height="1120" fill="url(#bg)"/>
+  <circle cx="1380" cy="75" r="170" fill="#dbeafe" opacity=".45"/>
+  <circle cx="55" cy="1040" r="180" fill="#e0e7ff" opacity=".45"/>
+
+  <text x="82" y="68" class="eyebrow">PRESENTATION API · ROUTER FLOW</text>
+  <text x="82" y="118" class="title">POST /upload/ 처리 흐름</text>
+  <text x="82" y="151" class="subtitle">routers/upload.py · create_feedback()</text>
+
+  <g filter="url(#shadow)">
+    <rect x="390" y="184" width="720" height="142" rx="22" fill="#fff" stroke="#dbe4f1"/>
+  </g>
+  <rect x="390" y="184" width="11" height="142" rx="5" fill="url(#blue)"/>
+  <text x="426" y="220" class="section">1 · 요청 입력</text>
+  <rect x="426" y="239" width="190" height="36" rx="10" fill="#eef2ff"/>
+  <text x="440" y="263" class="code" fill="#3f51b5">title · perpose</text>
+  <text x="628" y="263" class="small">필수 query parameters</text>
+  <rect x="426" y="282" width="164" height="30" rx="9" fill="#f1f5f9"/>
+  <text x="439" y="303" class="code" fill="#46566e">detail (optional)</text>
+  <rect x="600" y="282" width="164" height="30" rx="9" fill="#f1f5f9"/>
+  <text x="613" y="303" class="code" fill="#46566e">prompt (optional)</text>
+  <rect x="774" y="282" width="150" height="30" rx="9" fill="#f1f5f9"/>
+  <text x="787" y="303" class="code" fill="#46566e">file (optional)</text>
+  <text x="945" y="263" class="small">detail · prompt · file</text>
+  <text x="945" y="284" class="small">multipart/form-data</text>
+
+  <path d="M750 326v50" class="line-blue"/>
+  <g filter="url(#shadow)">
+    <path d="M750 374 927 461 750 548 573 461z" fill="#fff" stroke="#c8d4e5" stroke-width="2"/>
+  </g>
+  <text x="750" y="447" text-anchor="middle" class="heading">prompt와 file</text>
+  <text x="750" y="474" text-anchor="middle" class="heading">입력 여부 확인</text>
+  <text x="750" y="501" text-anchor="middle" class="small">None 여부로 분기</text>
+
+  <path d="M573 461H238v79" class="line-blue"/>
+  <path d="M750 548v-30h375v30" class="line-blue"/>
+  <path d="M927 461h337v79" class="line-blue"/>
+  <text x="307" y="448" class="small" fill="#3156c8">prompt 있음 + file 있음</text>
+  <text x="811" y="533" class="small" fill="#3156c8">prompt 있음 + file 없음</text>
+  <text x="1081" y="448" class="small" fill="#3156c8">prompt 없음 + file 있음</text>
+
+  <g filter="url(#shadow)">
+    <rect x="72" y="540" width="350" height="224" rx="20" fill="#fff" stroke="#c7d2fe"/>
+    <rect x="575" y="540" width="350" height="224" rx="20" fill="#fff" stroke="#c7d2fe"/>
+    <rect x="1078" y="540" width="350" height="224" rx="20" fill="#fff" stroke="#c7d2fe"/>
+  </g>
+  <rect x="72" y="540" width="350" height="9" rx="4" fill="#4f46e5"/>
+  <text x="98" y="580" class="section">대본 + 자료</text>
+  <text x="98" y="613" class="code" fill="#4f46e5">overall_result(...)</text>
+  <text x="98" y="650" class="body">prompt + file.file 전달</text>
+  <text x="98" y="676" class="body">mime_type · title · perpose</text>
+  <text x="98" y="714" class="small">대본과 발표 자료를 함께 평가</text>
+  <text x="98" y="742" class="small">detail도 함께 전달</text>
+
+  <rect x="575" y="540" width="350" height="9" rx="4" fill="#4f46e5"/>
+  <text x="601" y="580" class="section">대본만</text>
+  <text x="601" y="613" class="code" fill="#4f46e5">generate_script_feedback(...)</text>
+  <text x="601" y="650" class="body">prompt · title · perpose</text>
+  <text x="601" y="676" class="body">detail 전달</text>
+  <text x="601" y="714" class="small">대본 텍스트만 평가</text>
+
+  <rect x="1078" y="540" width="350" height="9" rx="4" fill="#4f46e5"/>
+  <text x="1104" y="580" class="section">자료만</text>
+  <text x="1104" y="613" class="code" fill="#4f46e5">generate_material_feedback(...)</text>
+  <text x="1104" y="650" class="body">file.file · mime_type 전달</text>
+  <text x="1104" y="676" class="body">title · perpose · detail</text>
+  <text x="1104" y="714" class="small">업로드 자료만 평가</text>
+
+  <path d="M247 764v95h360" class="line"/>
+  <path d="M750 764v95" class="line"/>
+  <path d="M1253 764v95H893" class="line"/>
+  <text x="688" y="839" class="small">각 서비스의 result</text>
+
+  <g filter="url(#shadow)">
+    <rect x="493" y="876" width="514" height="100" rx="20" fill="#fff" stroke="#cbd5e1"/>
+  </g>
+  <circle cx="536" cy="926" r="18" fill="#ecfdf5"/>
+  <path d="m528 926 6 6 11-13" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="570" y="917" class="heading">return result</text>
+  <text x="570" y="946" class="body">피드백 결과를 클라이언트에 반환</text>
+
+  <path d="M750 976v41" class="line"/>
+  <g filter="url(#shadow)">
+    <rect x="493" y="1021" width="514" height="70" rx="18" fill="#eff6ff" stroke="#bfdbfe"/>
+  </g>
+  <text x="750" y="1052" text-anchor="middle" class="code" fill="#3156c8">score · feedback · strengths · improvements</text>
+  <text x="750" y="1077" text-anchor="middle" class="small">서비스 응답(JSON 구조)</text>
+
+  <path d="M750 548v90h470v220" class="line-red"/>
+  <text x="916" y="626" class="small" fill="#bd4c5b">둘 다 없음</text>
+  <g filter="url(#shadow)">
+    <rect x="1085" y="858" width="300" height="112" rx="18" fill="#fff7f7" stroke="#fecdd3"/>
+  </g>
+  <circle cx="1122" cy="897" r="15" fill="#ffe4e6"/>
+  <path d="M1117 892l10 10m0-10-10 10" stroke="#dc6470" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="1150" y="895" class="heading" fill="#a83d4a">HTTP 400</text>
+  <text x="1107" y="927" class="small">대본이나 파일 중 하나 이상을</text>
+  <text x="1107" y="949" class="small">입력해야 합니다.</text>
+</svg>
