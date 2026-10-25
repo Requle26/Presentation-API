@@ -16,8 +16,8 @@ app.add_middleware(
 
 from routers import (
     auth,
+    audio_feedback,
     upload,
-    overall_result
 )
 
 from routers.mock_API import (
@@ -29,6 +29,6 @@ def get_root():
     return {"message" : "API is running!"}
 
 app.include_router(auth.router, prefix="/auth",)
+app.include_router(audio_feedback.router, prefix="/audio-feedback",)
 app.include_router(upload.router, prefix="/upload",)
-app.include_router(overall_result.router, prefix="/result",)
 app.include_router(mock_upload.router, prefix="/mock/upload")
