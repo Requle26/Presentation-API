@@ -4,7 +4,7 @@ from pathlib import Path
 
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
-from API_server.services.assess_reading import assess_reading
+from services.assess_reading import assess_reading
 
 
 router = APIRouter()
