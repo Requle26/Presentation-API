@@ -3,3 +3,13 @@ uvicorn
 google-genai
 python-dotenv
 python-multipart
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+torchaudio
+transformers
+librosa
+soundfile
+jamo
+g2pkk
+numpy
+huggingface_hub<1.0
