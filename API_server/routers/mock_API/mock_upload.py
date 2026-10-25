@@ -1,5 +1,5 @@
 from fastapi import APIRouter, File, Form, UploadFile
-from API_server.services.ai_feedback_method import generate_material_feedback, generate_script_feedback, overall_result
+from services.ai_feedback_method import generate_material_feedback, generate_script_feedback, overall_result
 import time
 import random
 
