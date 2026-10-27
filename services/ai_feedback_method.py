@@ -45,6 +45,7 @@ class overall_slide_feedback(slide_feedback):
     script_connection: str = Field(description="해당 슬라이드와 대본의 연관성 분석. 대본에서 이 슬라이드에 해당하는 부분이 없으면 그 사실을 적는다")
 
 class overall_feedback(feedback):
+    revised_script: str = Field(description="피드백을 반영하여 수정한 대본 전문")
     slides: list[overall_slide_feedback] = Field(description="발표 자료의 모든 슬라이드를 번호 순서대로 빠짐없이 평가한 목록")
 
 # 자료 피드백 함수
@@ -153,6 +154,7 @@ def overall_result(prompt: str, input_file, mime_type: str, title: str, perpose:
     6. JSON 이외의 설명이나 마크다운 코드 블록은 출력하지 마.
     7. 모든 필드는 반드시 포함해.
     8. 언어는 한국어로 작성해.
+    9. revised_script에는 slides와 improvements에서 지적한 대본 관련 문제(슬라이드와 대본의 불일치, 설명 누락 등)를 모두 반영하여 수정한 발표 대본 전문을 작성해. 슬라이드 순서에 맞춰 흐르도록 다듬되, 원래 대본의 의도, 핵심 내용, 말투는 유지하고, 없는 사실이나 수치는 새로 만들어 내지 마. 발표 자료 자체의 문제(디자인 등)는 대본에서 해결하려 하지 마.
     """
     if detail is None:
         TPD = f"발표 제목과 목적, 추가 설명등을 참고해서 피드백에 반영해, 발표 제목: {title}, 발표 목적: {perpose}, 발표 대본 및 발표 자료: "
