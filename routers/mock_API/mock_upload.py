@@ -40,6 +40,51 @@ def create_feedback(title: str, perpose: str, detail: str | None = Form(None), p
                     "deduction": 3,
                     "solution": "슬라이드 2, 3의 표를 핵심 선행연구 비교 한 장으로 요약하거나 삭제하고, 대본의 도입부도 이에 맞춰 조정하세요."
                 }
+            ],
+            "slides": [
+                {
+                    "slide_number": 1,
+                    "summary": "표지 - 태양광 패널 무동력 각도 조절 장치",
+                    "good_points": ["연구 주제가 제목에 명확히 드러남"],
+                    "issues": [],
+                    "script_connection": "대본 도입부의 주제 소개와 일치합니다."
+                },
+                {
+                    "slide_number": 2,
+                    "summary": "선행연구 검토 표",
+                    "good_points": ["선행연구를 조사했다는 점이 드러남"],
+                    "issues": [
+                        {
+                            "problem": "대회 제출용 보고서 서식이 그대로 삽입되어 발표 자료로서 가독성이 낮음",
+                            "solution": "핵심 선행연구 2~3개만 비교하는 요약 슬라이드로 재구성하세요."
+                        }
+                    ],
+                    "script_connection": "대본에서는 이 슬라이드를 거의 설명하지 않고 넘어가 슬라이드와 대본이 맞지 않습니다."
+                },
+                {
+                    "slide_number": 9,
+                    "summary": "이상기체 상태방정식과 지렛대 비율 분석",
+                    "good_points": ["이론적 근거를 수식으로 제시함"],
+                    "issues": [
+                        {
+                            "problem": "l1, l2, l3, r 등 기호의 정의가 슬라이드와 대본 모두에 없음",
+                            "solution": "기호 정의표를 한 장 추가하고, 대본에서 수식 도출 순서를 한 문장씩 설명하세요."
+                        }
+                    ],
+                    "script_connection": "대본이 수식 결과만 언급하고 도출 과정을 생략했습니다."
+                },
+                {
+                    "slide_number": 19,
+                    "summary": "결론 - 발전량 17.9% 증가",
+                    "good_points": ["연구 결과를 한 문장으로 요약함"],
+                    "issues": [
+                        {
+                            "problem": "이론 계산값인 17.9%가 실측 결과처럼 단정적으로 표기됨",
+                            "solution": "'이론적 계산에 따른 17.9% 증가 예측'으로 문구를 바꾸세요."
+                        }
+                    ],
+                    "script_connection": "대본은 이론값임을 구분해 설명하지만 슬라이드 표기는 이와 불일치합니다."
+                }
             ]
         }, {
             "score": 82,
@@ -65,6 +110,51 @@ def create_feedback(title: str, perpose: str, detail: str | None = Form(None), p
                     "deduction": 3,
                     "solution": "19, 25, 27번 슬라이드에 대본의 핵심 수치를 그래프나 큰 숫자로 시각화해 추가하세요."
                 }
+            ],
+            "slides": [
+                {
+                    "slide_number": 1,
+                    "summary": "표지 - AI 시대, 어떻게 활용할 것인가",
+                    "good_points": ["질문형 제목으로 주제에 대한 흥미를 유발함"],
+                    "issues": [],
+                    "script_connection": "대본의 첫 질문과 자연스럽게 이어집니다."
+                },
+                {
+                    "slide_number": 5,
+                    "summary": "MIT 연구 - 뇌 활동 비교 이미지",
+                    "good_points": ["객관적인 연구 자료를 근거로 활용함"],
+                    "issues": [
+                        {
+                            "problem": "뇌 활동 이미지에 범례와 비교 기준이 없어 해석하기 어려움",
+                            "solution": "집단별 범례와 '활동 낮음/높음' 한 줄 해석을 이미지 옆에 추가하세요."
+                        }
+                    ],
+                    "script_connection": "대본이 연구 결과를 설명하지만 슬라이드만으로는 같은 결론을 읽어내기 어렵습니다."
+                },
+                {
+                    "slide_number": 25,
+                    "summary": "문해력 하락 수치",
+                    "good_points": ["핵심 수치를 제시함"],
+                    "issues": [
+                        {
+                            "problem": "텍스트 위주 구성이라 대본의 수치 설명이 시각적으로 전달되지 않음",
+                            "solution": "수치를 큰 숫자나 막대그래프로 시각화하세요."
+                        }
+                    ],
+                    "script_connection": "대본의 수치 설명과 내용은 일치하지만 시각 자료가 이를 뒷받침하지 못합니다."
+                },
+                {
+                    "slide_number": 36,
+                    "summary": "'취향'의 사전적 정의",
+                    "good_points": ["핵심 개념을 정의하고 넘어감"],
+                    "issues": [
+                        {
+                            "problem": "포털 사전 검색 화면 캡처라 디자인 통일성이 떨어짐",
+                            "solution": "직접 정리한 정의 문구와 간단한 도식으로 교체하세요."
+                        }
+                    ],
+                    "script_connection": "대본이 '취향'을 핵심 개념으로 다루는 만큼 슬라이드의 완성도가 더 필요합니다."
+                }
             ]
         }, {
             "score": 75,
@@ -88,6 +178,39 @@ def create_feedback(title: str, perpose: str, detail: str | None = Form(None), p
                     "issue": "1번 표지 슬라이드에서 '생물 소개' 텍스트가 하단 매머드 및 인류 그림 이미지와 겹쳐 글씨가 잘 보이지 않는 시각적 가독성 문제가 있습니다.",
                     "deduction": 7,
                     "solution": "표지 텍스트와 그림이 겹치지 않도록 텍스트를 단색 배경 영역에 배치하거나 이미지를 옮기세요."
+                }
+            ],
+            "slides": [
+                {
+                    "slide_number": 1,
+                    "summary": "표지 - 신생대 생물 소개",
+                    "good_points": ["매머드와 인류 그림으로 주제를 직관적으로 보여줌"],
+                    "issues": [
+                        {
+                            "problem": "'생물 소개' 텍스트가 하단 그림과 겹쳐 잘 보이지 않음",
+                            "solution": "텍스트를 단색 배경 영역에 배치하거나 그림 위치를 옮기세요."
+                        }
+                    ],
+                    "script_connection": "대본의 도입부와 주제는 일치합니다."
+                },
+                {
+                    "slide_number": 10,
+                    "summary": "매머드의 기후 적응",
+                    "good_points": ["기후 변화와 생물의 적응을 연결해 설명함"],
+                    "issues": [],
+                    "script_connection": "대본의 설명 순서와 슬라이드 구성이 일치합니다."
+                },
+                {
+                    "slide_number": 17,
+                    "summary": "참나무의 쓰임",
+                    "good_points": ["참나무의 쓰임이라는 주제가 명확함"],
+                    "issues": [
+                        {
+                            "problem": "게임 아이템 그래픽이 쓰여 탐구 발표로서의 격식이 떨어짐",
+                            "solution": "실제 참나무 목재 사진이나 출처가 명확한 이미지로 교체하세요."
+                        }
+                    ],
+                    "script_connection": "대본이 짧게 지나가 슬라이드 내용을 충분히 뒷받침하지 못합니다."
                 }
             ]
         }]
@@ -209,6 +332,58 @@ def create_feedback(title: str, perpose: str, detail: str | None = Form(None), p
                     "deduction": 4,
                     "solution": "결론 슬라이드에 바람 등 외력에 대한 고려와 초기화 메커니즘을 한계와 보완점 항목으로 추가하세요."
                 }
+            ],
+            "slides": [
+                {
+                    "slide_number": 1,
+                    "summary": "표지 - 태양광 패널 무동력 각도 조절 장치",
+                    "good_points": ["주제가 제목에 명확히 드러남"],
+                    "issues": []
+                },
+                {
+                    "slide_number": 2,
+                    "summary": "선행연구 검토 표",
+                    "good_points": ["선행연구를 조사한 점이 드러남"],
+                    "issues": [
+                        {
+                            "problem": "보고서 서식표가 그대로 삽입되어 발표 자료로서 가독성이 낮음",
+                            "solution": "서식표를 삭제하고 핵심 선행연구를 한 장의 요약 슬라이드로 재구성하세요."
+                        }
+                    ]
+                },
+                {
+                    "slide_number": 3,
+                    "summary": "선행연구 출처 링크",
+                    "good_points": [],
+                    "issues": [
+                        {
+                            "problem": "긴 웹 링크가 그대로 노출되어 청중이 읽을 수 없음",
+                            "solution": "링크는 마지막 참고문헌 슬라이드로 옮기고, 이 슬라이드에는 핵심 내용만 남기세요."
+                        }
+                    ]
+                },
+                {
+                    "slide_number": 10,
+                    "summary": "토크 관계식 유도",
+                    "good_points": ["필요한 힘을 수식으로 유도해 설득력을 높임"],
+                    "issues": [
+                        {
+                            "problem": "L, H, l1~l4 등 기호에 대한 시각적 정의가 없어 이해하기 어려움",
+                            "solution": "도식에 기호를 표시하고 옆에 범례로 변수 설명을 추가하세요."
+                        }
+                    ]
+                },
+                {
+                    "slide_number": 17,
+                    "summary": "모형 작동 실험 결과",
+                    "good_points": ["실제 모형으로 작동을 확인함"],
+                    "issues": [
+                        {
+                            "problem": "오른쪽 5분, 왼쪽 12분의 시간 차이에 대한 원인 분석이 없음",
+                            "solution": "마찰, 열전달 효율 등 가능한 원인을 한 줄로 추가하고 개선 방향을 적으세요."
+                        }
+                    ]
+                }
             ]
         }, {
             "score": 70,
@@ -244,6 +419,62 @@ def create_feedback(title: str, perpose: str, detail: str | None = Form(None), p
                     "deduction": 5,
                     "solution": "'이제 설명을 시작하겠습니다' 같은 구어체 문장을 삭제하고, 마지막 슬라이드는 '감사합니다'와 발표자 정보로 정리하세요."
                 }
+            ],
+            "slides": [
+                {
+                    "slide_number": 1,
+                    "summary": "표지 - 별의 죽음",
+                    "good_points": ["주제가 한눈에 드러남"],
+                    "issues": []
+                },
+                {
+                    "slide_number": 2,
+                    "summary": "별의 질량별 진화 계통도",
+                    "good_points": ["전체 진화 흐름을 한 장에 보여줘 이해를 도움"],
+                    "issues": [
+                        {
+                            "problem": "'이제 설명을 시작하겠습니다' 같은 구어체 문장이 화면에 노출됨",
+                            "solution": "구어체 문장을 삭제하고 계통도만 남기세요."
+                        }
+                    ]
+                },
+                {
+                    "slide_number": 3,
+                    "summary": "태양과 비슷한 별의 진화",
+                    "good_points": ["이미지와 설명을 좌우로 배치해 구조가 깔끔함"],
+                    "issues": [
+                        {
+                            "problem": "1단계 설명 없이 2단계부터 시작해 단계 흐름이 어색함",
+                            "solution": "1단계(주계열성)를 간단히 추가하거나 단계 번호를 1부터 다시 매기세요."
+                        },
+                        {
+                            "problem": "설명이 긴 줄글이라 한눈에 파악하기 어려움",
+                            "solution": "핵심 키워드 중심의 3~4줄 개조식으로 줄이세요."
+                        }
+                    ]
+                },
+                {
+                    "slide_number": 5,
+                    "summary": "질량이 큰 별의 진화",
+                    "good_points": ["진화 원리를 도식으로 함께 제시함"],
+                    "issues": [
+                        {
+                            "problem": "상단 텍스트는 지나치게 크고 하단 이미지와 글은 매우 작아 3, 4번과 레이아웃이 불일치함",
+                            "solution": "3, 4번 슬라이드와 같은 좌측 이미지-우측 텍스트 템플릿으로 통일하세요."
+                        }
+                    ]
+                },
+                {
+                    "slide_number": 6,
+                    "summary": "단계별 요약",
+                    "good_points": ["질량별 결과를 한 장에 정리해 복습에 유용함"],
+                    "issues": [
+                        {
+                            "problem": "'블랙홀' 텍스트가 화살표와 겹치고 점선이 어긋나 있음",
+                            "solution": "텍스트와 화살표 위치를 조정하고 점선을 정렬하세요."
+                        }
+                    ]
+                }
             ]
         }, {
             "score": 78,
@@ -278,6 +509,58 @@ def create_feedback(title: str, perpose: str, detail: str | None = Form(None), p
                     "issue": "결론부(35~39번 슬라이드)가 '취향', '주체적 능력' 등 추상적 어휘로만 마무리되어, '어떻게 하면 AI를 잘 활용할 수 있을까'라는 발표 제목에 부합하는 학생 수준에서의 구체적인 실천 방안이나 방법론 제시가 부족함.",
                     "deduction": 3,
                     "solution": "'AI 활용 체크리스트 3가지'처럼 학생이 바로 실천할 수 있는 구체적인 방안을 결론부에 추가하세요."
+                }
+            ],
+            "slides": [
+                {
+                    "slide_number": 1,
+                    "summary": "표지 - AI를 어떻게 잘 활용할 수 있을까",
+                    "good_points": ["질문형 제목으로 흥미를 유발함"],
+                    "issues": []
+                },
+                {
+                    "slide_number": 5,
+                    "summary": "MIT 연구 - 뇌파 활성도 비교",
+                    "good_points": ["최신 연구를 근거로 제시해 신뢰성이 높음"],
+                    "issues": [
+                        {
+                            "problem": "범례와 비교 기준이 없어 이미지를 직관적으로 해석하기 어려움",
+                            "solution": "집단별 범례와 한 줄 해석 문구를 이미지 옆에 추가하세요."
+                        }
+                    ]
+                },
+                {
+                    "slide_number": 13,
+                    "summary": "밈(Meme) 이미지 1",
+                    "good_points": [],
+                    "issues": [
+                        {
+                            "problem": "밈 이미지가 13~16번에 걸쳐 연속 배치되어 발표의 진지함과 통일성을 흐림",
+                            "solution": "대표 이미지 한 장으로 줄이고 나머지는 핵심 메시지 한 줄로 대체하세요."
+                        }
+                    ]
+                },
+                {
+                    "slide_number": 25,
+                    "summary": "문해력 하락 수치",
+                    "good_points": ["핵심 수치를 제시함"],
+                    "issues": [
+                        {
+                            "problem": "'3이였던', '되버림' 등 맞춤법 오류가 있음",
+                            "solution": "'3이었던', '돼버림'으로 수정하세요."
+                        }
+                    ]
+                },
+                {
+                    "slide_number": 28,
+                    "summary": "AI 시대 생존 방법을 묻는 슬라이드",
+                    "good_points": ["청중에게 질문을 던져 참여를 유도함"],
+                    "issues": [
+                        {
+                            "problem": "'어떻게 살아남음?' 같은 비격식 구어체가 국어 수행평가에 부적절함",
+                            "solution": "'어떻게 살아남을 수 있을까?'로 바꾸세요."
+                        }
+                    ]
                 }
             ]
         }]
