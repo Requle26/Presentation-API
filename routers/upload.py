@@ -1,6 +1,7 @@
 from fastapi import APIRouter, File, Form, UploadFile, HTTPException
 from services.ai_feedback_method import overall_result, generate_script_feedback, generate_material_feedback
-from google.genai import errors as genai_errors
+import openai
+from services.file_converter import UnsupportedFileType
 
 
 router = APIRouter()
@@ -40,8 +41,10 @@ def create_feedback(title: str, perpose: str, detail: str | None = Form(None), p
         else:
             raise HTTPException(status_code=400, detail="대본이나 파일 중 하나 이상을 입력해야 합니다.")
 
-    except genai_errors.ServerError as e:
-        if e.code == 503:
+    except UnsupportedFileType as e:
+        raise HTTPException(status_code=415, detail=str(e))
+    except openai.InternalServerError as e:
+        if e.status_code == 503:
             raise HTTPException(status_code=503, detail="모델 사용량이 많습니다. 잠시 후 다시 시도해 주세요.")
         raise HTTPException(status_code=502, detail="AI 서버 오류가 발생했습니다.")
 

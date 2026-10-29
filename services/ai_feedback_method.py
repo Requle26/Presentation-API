@@ -1,18 +1,31 @@
 import os
 from pathlib import Path
 
-from google import genai
 from dotenv import load_dotenv
-from google.genai import types
+from openai import OpenAI
 from pydantic import BaseModel, Field
+
+from services.file_converter import file_to_images
 
 load_dotenv(Path(__file__).resolve().parents[1] / ".env", override=True)
 
-api_key = os.getenv("GEMINI_API_KEY")
+api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
-    raise RuntimeError("프로젝트 루트 .env에 GEMINI_API_KEY를 설정해 주세요.")
+    raise RuntimeError("프로젝트 루트 .env에 OPENAI_API_KEY를 설정해 주세요.")
 
-client = genai.Client(api_key=api_key)
+client = OpenAI(api_key=api_key)
+
+
+def _parse(system_prompt: str, texts: list[str], images: list[str], schema):
+    content = [{"type": "input_text", "text": t} for t in texts]
+    content += [{"type": "input_image", "image_url": url} for url in images]
+    response = client.responses.parse(
+        model=os.getenv("OPENAI_MODEL"),
+        instructions=system_prompt,
+        input=[{"role": "user", "content": content}],
+        text_format=schema,
+    )
+    return response.output_parsed
 
 class improvement(BaseModel):
     issue: str = Field(description="개선이 필요한 문제점")
@@ -64,23 +77,13 @@ def generate_material_feedback(input_file, mime_type: str, title: str, perpose: 
     6. 언어는 한국어로 작성해.
     """
 
-    uploaded_file = client.files.upload(file=input_file, config=types.UploadFileConfig(mime_type=mime_type))
+    images = file_to_images(input_file, mime_type)
     if detail is None:
         prompt = f"발표 제목과 목적, 추가 설명등을 참고해서 피드백에 반영해, 발표 제목: {title}, 발표 목적: {perpose}"
     elif detail is not None:
         prompt = f"발표 제목과 목적, 추가 설명등을 참고해서 피드백에 반영해, 발표 제목: {title}, 발표 목적: {perpose}, 추가 설명: {detail}"
 
-    response = client.models.generate_content(
-        model=os.getenv("GEMINI_MODEL"),
-        contents=[prompt, uploaded_file],
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            response_mime_type="application/json",
-            response_schema=material_feedback,
-        ),
-    )
-
-    return response.parsed
+    return _parse(SYSTEM_PROMPT, [prompt], images, material_feedback)
 
 
 # 대본 피드백 함수
@@ -126,17 +129,7 @@ def generate_script_feedback(prompt: str, title: str, perpose: str, detail: str 
     elif detail is not None:
             TPD = f"발표 제목과 목적, 추가 설명등을 참고해서 피드백에 반영해, 발표 제목: {title}, 발표 목적: {perpose}, 추가 설명: {detail}, 발표 대본: "
     
-    response = client.models.generate_content(
-        model=os.getenv("GEMINI_MODEL"),
-        contents=[TPD, prompt],
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            response_mime_type="application/json",
-            response_schema=script_feedback,
-        ),
-    )
-
-    return response.parsed
+    return _parse(SYSTEM_PROMPT, [TPD, prompt], [], script_feedback)
 
 
 # 대본 / 자료 종합 피드백 함수
@@ -161,15 +154,5 @@ def overall_result(prompt: str, input_file, mime_type: str, title: str, perpose:
     elif detail is not None:
         TPD = f"발표 제목과 목적, 추가 설명등을 참고해서 피드백에 반영해, 발표 제목: {title}, 발표 목적: {perpose}, 추가 설명: {detail}, 발표 대본 및 발표 자료: "
 
-    uploaded_file = client.files.upload(file=input_file, config=types.UploadFileConfig(mime_type=mime_type))
-    response = client.models.generate_content(
-        model=os.getenv("GEMINI_MODEL"),
-        contents=[TPD, prompt, uploaded_file],
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            response_mime_type="application/json",
-            response_schema=overall_feedback,
-        ),
-    )
-
-    return response.parsed
+    images = file_to_images(input_file, mime_type)
+    return _parse(SYSTEM_PROMPT, [TPD, prompt], images, overall_feedback)
