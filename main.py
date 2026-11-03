@@ -17,6 +17,7 @@ app.add_middleware(
 from routers import (
     auth,
     upload,
+    speech_upload
 )
 
 from routers.mock_API import (
@@ -30,3 +31,4 @@ def get_root():
 app.include_router(auth.router, prefix="/auth",)
 app.include_router(upload.router, prefix="/upload",)
 app.include_router(mock_upload.router, prefix="/mock/upload")
+app.include_router(speech_upload.router, prefix="/speech_upload")
