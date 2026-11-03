@@ -22,6 +22,7 @@ from routers import (
 
 from routers.mock_API import (
     mock_upload,
+    mock_speech_upload,
 )
 
 @app.get("/")
@@ -32,3 +33,4 @@ app.include_router(auth.router, prefix="/auth",)
 app.include_router(upload.router, prefix="/upload",)
 app.include_router(mock_upload.router, prefix="/mock/upload")
 app.include_router(speech_upload.router, prefix="/speech_upload")
+app.include_router(mock_speech_upload.router, prefix="/mock/speech_upload")
